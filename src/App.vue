@@ -1,30 +1,43 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import YHNTransrator from './components/YHNTransrator.vue'
+
+const randomText = [
+  'おかえり ヨハネ',
+  'ぬまづ駅',
+  'じゃまつ軌道',
+  'シュリーレン',
+  'マリ様',
+]
+
+const text = ref('')
+
+text.value = randomText[Math.floor(Math.random() * randomText.length)]
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="container">
+    <div class="row justify-content-center my-5">
+      <div class="col-lg-6 text-center">
+        <h1 class="fw-bold mb-3">現実→幻日変換</h1>
+        <textarea v-model="text" rows="2" class="form-control mb-3" />
+        <YHNTransrator :text="text" :conversion-table="{}" />
+      </div>
+    </div>
+    <div class="row my-3 justify-content-center">
+      <div class="col-lg-6">
+        <h4 class="fw-bold">注意事項</h4>
+        <ul>
+          <li>このツールは公式ではありませんし、公式に教える必要もありません</li>
+          <li>データが正しいかどうかは保証できません(一部未出文字については創作)</li>
+          <li>権利者とのトラブルを避けるため、直接の画像データの利用はお控えください</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        &copy; 2023 windyakin
+      </div>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
