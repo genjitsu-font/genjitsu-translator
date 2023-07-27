@@ -129,7 +129,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      spriteImageObj = await loadImage('/characters.png');
+      spriteImageObj = await loadImage('./characters.png');
       
       if (!container.value) {
         return;
