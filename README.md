@@ -1,4 +1,4 @@
-# Genjitsu Transrator
+# Genjitsu Translator
 
 現実の文字を幻日の文字に変換して表示します
 
