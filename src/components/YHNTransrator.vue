@@ -1,5 +1,8 @@
 <template>
+  <div class="canvas">
     <div ref="container"></div>
+    <div class="overlay"></div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -152,3 +155,18 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.canvas {
+  position: relative
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+</style>
