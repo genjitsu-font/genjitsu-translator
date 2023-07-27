@@ -33,8 +33,8 @@ text.value = randomText[Math.floor(Math.random() * randomText.length)]
       <div class="col-lg-6">
         <h4 class="fw-bold">注意事項</h4>
         <ul>
-          <li>このツールは公式ではありませんし、公式に教える必要もありません</li>
-          <li>データが正しいかどうかは保証できません(一部未出文字については創作)</li>
+          <li>このツールは公式とは一切関係ありません</li>
+          <li>データが正しいかどうかは保証できません(未出文字については推測による創作)</li>
           <li>権利者とのトラブルを避けるため、直接の画像データの利用はお控えください</li>
         </ul>
       </div>
