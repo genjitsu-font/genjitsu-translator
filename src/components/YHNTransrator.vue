@@ -1,5 +1,5 @@
 <template>
-  <div ref="container"></div>
+    <div ref="container"></div>
 </template>
 
 <script lang="ts">
@@ -13,6 +13,9 @@ export default defineComponent({
     text: {
       type: String,
       required: true,
+    },
+    markUndefined: {
+      type: Boolean,
     },
   },
   setup(props) {
@@ -55,6 +58,13 @@ export default defineComponent({
 
       const text = normalizeText(props.text)
 
+      const rect = new Konva.Rect({
+        width: stage.value!.width(),
+        height: stage.value!.height(),
+        fill: 'white',
+      });
+      layer.add(rect);
+
       for (let i = 0; i < text.length; i++, charIndex++) {
         let char = text[i]
 
@@ -86,15 +96,28 @@ export default defineComponent({
 
           layer.add(konvaImage)
         } else {
+          if (props.markUndefined) {
+            const undefinedMarker = new Konva.Rect({
+              x: charIndex * characterWidth,
+              y: currentLineY,
+              width: 50,
+              height: 50,
+              fill: 'red',
+              opacity: 0.2,
+            });
+            layer.add(undefinedMarker);
+          }
           const text = new Konva.Text({
             text: char,
             x: charIndex * characterWidth,
             y: currentLineY,
             fontSize: 50,
             fontFamily: 'sans-serif',
+            verticalAlign: 'middle',
             fill: 'black',
+            width: 50,
+            height: 50,
           })
-
           layer.add(text)
         }
       }
@@ -106,18 +129,21 @@ export default defineComponent({
       spriteImageObj = await loadImage('/characters.png');
       
       if (!container.value) {
-        return
+        return;
       }
+
+      const width = container.value!.clientWidth;
+      const height = (50 / Math.floor((container.value.clientWidth / characterWidth))) * lineHeight;
 
       stage.value = new Konva.Stage({
         container: container.value,
-        width: container.value.clientWidth || 1000,
-        height: (50 / Math.floor((container.value.clientWidth / characterWidth))) * lineHeight,
-      })
+        width,
+        height,
+      });
       await drawTextOnCanvas(spriteImageObj);
     });
 
-    watch(() => props.text, async () => {
+    watch(() => [props.text, props.markUndefined], async () => {
       stage.value!.removeChildren()
       drawTextOnCanvas(spriteImageObj)
     });

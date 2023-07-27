@@ -11,6 +11,7 @@ const randomText = [
 ]
 
 const text = ref('')
+const markUndefined = ref(false)
 
 text.value = randomText[Math.floor(Math.random() * randomText.length)]
 </script>
@@ -21,7 +22,11 @@ text.value = randomText[Math.floor(Math.random() * randomText.length)]
       <div class="col-lg-6 text-center">
         <h1 class="fw-bold mb-3">現実→幻日変換</h1>
         <textarea v-model="text" rows="2" class="form-control mb-3" />
-        <YHNTransrator :text="text" :conversion-table="{}" />
+        <div class="mb-4 form-check text-start">
+          <input v-model="markUndefined"  type="checkbox" class="form-check-input" id="mark-undefined">
+          <label class="form-check-label" for="mark-undefined">未定義の文字を強調する</label>
+        </div>
+        <YHNTransrator :text="text" :mark-undefined="markUndefined" />
       </div>
     </div>
     <div class="row my-3 justify-content-center">
