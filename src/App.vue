@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import YHNTransrator from './components/YHNTransrator.vue'
+import YHNTranslator from './components/YHNTranslator.vue'
 
 const randomText = [
   'おかえり ヨハネ',
@@ -26,7 +26,7 @@ text.value = randomText[Math.floor(Math.random() * randomText.length)]
           <input v-model="markUndefined"  type="checkbox" class="form-check-input" id="mark-undefined">
           <label class="form-check-label" for="mark-undefined">未定義の文字を強調する</label>
         </div>
-        <YHNTransrator :text="text" :mark-undefined="markUndefined" />
+        <YHNTranslator :text="text" :mark-undefined="markUndefined" />
       </div>
     </div>
     <div class="row my-3 justify-content-center">
