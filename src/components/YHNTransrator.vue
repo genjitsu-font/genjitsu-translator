@@ -4,7 +4,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from 'vue'
-import { Image as KonvaImage, Layer, Stage, Text } from 'konva'
+import type { Ref } from 'vue'
+import Konva from 'konva'
 import ConversionTable from '../conversionTable.ts'
 
 export default defineComponent({
@@ -15,8 +16,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const container = ref(null)
-    const stage = ref(null)
+    const container: Ref<HTMLDivElement | null> = ref(null)
+    const stage: Ref<Konva.Stage | null> = ref(null)
     let spriteImageObj: HTMLImageElement;
 
     const loadImage = (src: string): Promise<HTMLImageElement> => {
@@ -45,12 +46,12 @@ export default defineComponent({
     const lineHeight = 60
 
     const drawTextOnCanvas = async (spriteImageObj: HTMLImageElement) => {
-      const layer = new Layer()
-      stage.value.add(layer)
+      const layer = new Konva.Layer()
+      stage.value!.add(layer)
 
       let charIndex = 0
       let currentLineY = 0;
-      const canvasWidth = container.value.clientWidth;
+      const canvasWidth = container.value!.clientWidth || 1000;
 
       const text = normalizeText(props.text)
 
@@ -69,7 +70,7 @@ export default defineComponent({
 
         if (ConversionTable[char]) {
           const coords = ConversionTable[char]
-          const konvaImage = new KonvaImage({
+          const konvaImage = new Konva.Image({
             image: spriteImageObj,
             x: charIndex * characterWidth,
             y: currentLineY,
@@ -85,7 +86,7 @@ export default defineComponent({
 
           layer.add(konvaImage)
         } else {
-          const text = new Text({
+          const text = new Konva.Text({
             text: char,
             x: charIndex * characterWidth,
             y: currentLineY,
@@ -104,16 +105,20 @@ export default defineComponent({
     onMounted(async () => {
       spriteImageObj = await loadImage('/characters.png');
       
-      stage.value = new Stage({
+      if (!container.value) {
+        return
+      }
+
+      stage.value = new Konva.Stage({
         container: container.value,
-        width: container.value.clientWidth,
+        width: container.value.clientWidth || 1000,
         height: (50 / Math.floor((container.value.clientWidth / characterWidth))) * lineHeight,
       })
       await drawTextOnCanvas(spriteImageObj);
     });
 
     watch(() => props.text, async () => {
-      stage.value.removeChildren()
+      stage.value!.removeChildren()
       drawTextOnCanvas(spriteImageObj)
     });
 

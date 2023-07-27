@@ -1,4 +1,13 @@
-const ConversionTable = {
+type ConversionTable = {
+  [key: string]: {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+  };
+};
+
+const ConversionTable: ConversionTable = {
   "0": {
     "x": 0,
     "y": 0,
