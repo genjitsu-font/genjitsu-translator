@@ -17,6 +17,14 @@ npm run dev
 npm run build
 ```
 
+## Create sprite
+
+`glyph/` ディレクトリ以下に、 `あ.png` など文字名を含むファイル名で画像を配置してください。
+
+```
+python3 sprite.py
+```
+
 ## License
 
 [MIT License](LICENSE)
